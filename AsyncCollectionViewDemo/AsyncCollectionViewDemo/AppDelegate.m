@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "ViewController.h"
 
 @interface AppDelegate ()
 
@@ -16,7 +17,13 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.backgroundColor = [UIColor whiteColor];
+    self.window.rootViewController = [[UINavigationController alloc] init];
+    
+    [self pushNewViewControllerAnimated:NO];
+    
+    [self.window makeKeyAndVisible];
     return YES;
 }
 
@@ -41,5 +48,17 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+-(void)pushNewViewControllerAnimated:(BOOL)animated{
+    UINavigationController *nav=(UINavigationController*)self.window.rootViewController;
+    UIViewController *viewController = [[ViewController alloc] init];
+    viewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Push Another Copy" style:UIBarButtonItemStylePlain target:self action:@selector(pushNewViewController)];
+    [nav pushViewController:viewController animated:animated];
+}
+
+-(void)pushNewViewController{
+    [self pushNewViewControllerAnimated:YES];
+}
+
 
 @end
